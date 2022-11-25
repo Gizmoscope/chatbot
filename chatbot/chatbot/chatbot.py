@@ -40,7 +40,7 @@ class Chatbot:
         intent_ids = []
         for intent_id, intent in enumerate(tqdm(self.intents, desc="Preprocessing")):
             augmented_utterances = [
-                *intent.utterances,  self.augmentation.augment(intent.utterances, len(intent.utterances))
+                *intent.utterances, *self.augmentation.augment(intent.utterances, len(intent.utterances))
             ]
             utterances.extend(augmented_utterances)
             intent_ids.extend([intent_id] * len(augmented_utterances))
