@@ -1,0 +1,76 @@
+{
+  "intents": [
+    {
+      "name": "greeting",
+      "responses": [
+        "Hi! Schön Dich kennenzulernen.",
+        "Hallo [PER]! Schön Dich kennenzulernen."
+      ],
+      "utterances": [
+        "Hi",
+        "Hallo",
+        "Grüß dich!",
+        "Hi, ich bin Markus",
+        "Hallo. Mein Name ist Markus."
+      ]
+    },
+    {
+      "name": "bye",
+      "responses": [
+        "Auf Wiedersehen!",
+        "Bis bald!"
+      ],
+      "utterances": [
+        "Auf Wiedersehen!",
+        "Bis bald!",
+        "Tschüss",
+        "Bye",
+        "Machs gut"
+      ]
+    },
+    {
+      "name": "weather",
+      "responses": [
+        "Bitte nenne mir einen konkreten Ort, wenn du nach dem Wetter fragst.",
+        "Das Wetter in [LOC] ist sehr schön und sommerlich. Ganz sicher bin ich mir allerdings nicht, nimm also am besten warme Kleidung und einen Regenschirm mit."
+      ],
+      "utterances": [
+        "Wie ist das Wetter in Münster?",
+        "Wie ist das Wetter",
+        "Regnet es gerade?",
+        "Scheint in Berlin die Sonne?",
+        "Sag mir bitte wie das Wetter wird.",
+        "Wetter"
+      ]
+    },
+    {
+      "name": "joke",
+      "responses": [
+        "Ich kenne einen lustigen Bahnwitz - weiß aber nicht, ob der ankommt...",
+        "Es gibt 10 Arten von Menschen in der Welt. Die einen verstehen das Binärsystem und die anderen nicht."
+      ],
+      "utterances": [
+        "Erzähl mir einen Witz.",
+        "Bring mich zum lachen!",
+        "Sag was lustiges",
+        "Ich will lachen",
+        "Witz"
+      ]
+    },
+    {
+      "name": "stock",
+      "responses": [
+        "Die Aktien von [ORG] sehen gut aus! Investieren lohnt sich!",
+        "Wenn du mit Aktien handelst solltest du dich gut informieren. Ich kann dir helfen. Welche Aktien interessieren dich?"
+      ],
+      "utterances": [
+        "Sollte ich in Facebook investieren?",
+        "Wie steht die Tesla-Aktie?",
+        "Nenn mir die aktuellen Aktienkurse",
+        "Aktien",
+        "Investieren",
+        "Wie kann man gerade am besten investieren?"
+      ]
+    }
+  ]
+}
