@@ -87,8 +87,8 @@ class Chatbot:
         :param utterance: Any text
         :return: (intent_id, confidence, [entity1, entity2, ...])
         """
-        entities, last_hidden_state, attention_mask = self.pipeline(utterance)
-        intent_distribution = self.downstream_model((last_hidden_state, attention_mask)).numpy()
+        entities, relevant_hidden_state, attention_mask = self.pipeline(utterance)
+        intent_distribution = self.downstream_model((relevant_hidden_state, attention_mask)).numpy()
         intent_id = np.argmax(intent_distribution)
         confidence = intent_distribution[0, intent_id]
         return int(intent_id), float(confidence), entities

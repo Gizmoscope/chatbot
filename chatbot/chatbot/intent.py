@@ -30,7 +30,7 @@ class Intent:
             key = get_key(entity_groups)
             self.responses_by_entity_groups[key].append(response)
 
-    def respond_using_entities(self, entities: list[dict[str, str]]):
+    def respond_using_entities(self, entities: list[dict[str, str]]) -> str:
         """
         Choose/create a response based on the given set of entities
         :param entities: a list of entities

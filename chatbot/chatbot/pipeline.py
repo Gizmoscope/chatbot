@@ -25,7 +25,7 @@ class ChatbotPipeline(TokenClassificationPipeline):
 
         return {
             "logits": model_output.logits,
-            "last_hidden_state": model_output.hidden_states[SOURCE_LAYER],
+            "relevant_hidden_state": model_output.hidden_states[SOURCE_LAYER],
             "special_tokens_mask": special_tokens_mask,
             "offset_mapping": offset_mapping,
             "sentence": sentence,
@@ -41,5 +41,5 @@ class ChatbotPipeline(TokenClassificationPipeline):
         :return: entities, last hidden layer
         """
         entities = super().postprocess(model_outputs, aggregation_strategy, ignore_labels)
-        last_hidden_state = model_outputs["last_hidden_state"].numpy()
-        return entities, last_hidden_state, model_outputs["attention_mask"].numpy()
+        relevant_hidden_state = model_outputs["relevant_hidden_state"].numpy()
+        return entities, relevant_hidden_state, model_outputs["attention_mask"].numpy()
