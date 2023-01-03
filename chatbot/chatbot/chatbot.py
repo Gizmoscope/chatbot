@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import yaml
 from dataclasses import asdict
 from pathlib import Path
 
@@ -23,7 +24,9 @@ class Chatbot:
     However, `train()` should be called first because otherwise the bot cannot understand the intents well.
     """
 
-    def __init__(self, intents: list[Intent]):
+    def __init__(self, greeting: str, default_response: str, intents: list[Intent]):
+        self.greeting = greeting
+        self.default_response = default_response
         self.intents = intents
         self.tokenizer = AutoTokenizer.from_pretrained("Davlan/bert-base-multilingual-cased-ner-hrl")
         self.base_model = TFAutoModelForTokenClassification.from_pretrained("Davlan/bert-base-multilingual-cased-ner-hrl", output_hidden_states=True)
@@ -67,17 +70,39 @@ class Chatbot:
         :param path: destination
         """
         self.downstream_model.save(path)
-        (path / "intents").write_text(json.dumps([asdict(intent) for intent in self.intents]), encoding=TXT_ENCODING)
+        (path / "bot.json").write_text(json.dumps({
+            "greeting": self.greeting,
+            "default_response": self.default_response,
+            "intents": [asdict(intent) for intent in self.intents]
+        }), encoding=TXT_ENCODING)
+
+    @classmethod
+    def define(cls, train_data_path: Path):
+        """
+        Define a chatbot from a configuration file.
+        :param train_data_path: path to train data
+        :return: defined chatbot (not yet trained)
+        """
+        if train_data_path.suffix.lower() == ".json":
+            bot = json.loads(train_data_path.read_text(encoding=TXT_ENCODING))
+        elif train_data_path.suffix.lower() in [".yml", ".yaml"]:
+            bot = yaml.load(train_data_path.read_text(encoding=TXT_ENCODING), yaml.loader.SafeLoader)
+        else:
+            raise ValueError(f"Unknown file suffix: {train_data_path.suffix}")
+        return Chatbot(
+            greeting=bot["greeting"],
+            default_response=bot["default_response"],
+            intents=[Intent(**intent) for intent in bot["intents"]]
+        )
 
     @classmethod
     def load(cls, path: Path) -> Chatbot:
         """
-        Loaf the chatbot
+        Load the chatbot
         :param path: source
         :return: loaded chatbot
         """
-        intents = json.loads((path / "intents").read_text(encoding=TXT_ENCODING))
-        chatbot = Chatbot([Intent(**intent) for intent in intents])
+        chatbot = cls.define(path / "bot.json")
         chatbot.downstream_model = tf.keras.models.load_model(path)
         return chatbot
 
@@ -105,7 +130,7 @@ class Chatbot:
         if confidence > CONFIDENCE_THRESHOLD:
             return self.intents[intent_id].respond_using_entities(entities)
         else:
-            return "Ich habe dich leider nicht verstanden. Kannst du das bitte anders vormulieren?"
+            return self.default_response
 
 
 def get_downstream_model(num_classes: int) -> tf.keras.Model:

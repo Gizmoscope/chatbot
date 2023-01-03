@@ -16,10 +16,8 @@ def cli():
 @click.option("--bot_path", type=Path, required=True)
 def train_chatbot(train_data_path: Path, bot_path: Path):
     from chatbot.chatbot.chatbot import Chatbot
-    from chatbot.chatbot.intent import Intent
 
-    bot = json.loads(train_data_path.read_text(encoding=TXT_ENCODING))
-    chatbot = Chatbot([Intent(**intent) for intent in bot["intents"]])
+    chatbot = Chatbot.define(train_data_path)
     chatbot.train()
     chatbot.save(bot_path)
 
@@ -30,7 +28,7 @@ def run_chatbot(bot_path: Path):
     from chatbot.chatbot.chatbot import Chatbot
 
     chatbot = Chatbot.load(bot_path)
-    print("Hallo, ich bin ein Chatbot. Sprich mit mir!")
+    print(chatbot.greeting)
     while True:
         utterance = input("> ")
         print(chatbot.respond(utterance))

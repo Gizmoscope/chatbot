@@ -1,4 +1,6 @@
 {
+  "greeting": "Hallo, ich bin ein Chatbot. Sprich mit mir!",
+  "default_response": "Ich habe dich leider nicht verstanden. Kannst du das bitte anders vormulieren?",
   "intents": [
     {
       "name": "greeting",
@@ -61,7 +63,7 @@
       "name": "stock",
       "responses": [
         "Die Aktien von [ORG] sehen gut aus! Investieren lohnt sich!",
-        "Wenn du mit Aktien handelst solltest du dich gut informieren. Ich kann dir helfen. Welche Aktien interessieren dich?"
+        "Wenn du mit Aktien handelst, solltest du dich gut informieren. Ich kann dir helfen. Welche Aktien interessieren dich?"
       ],
       "utterances": [
         "Sollte ich in Facebook investieren?",
@@ -70,6 +72,15 @@
         "Aktien",
         "Investieren",
         "Wie kann man gerade am besten investieren?"
+      ]
+    },
+    {
+      "name": "stock_info",
+      "responses": [
+        "Es gibt zum Beispiel: Mircosoft, Tesla, DAX, Apple, "
+      ],
+      "utterances": [
+        "Welche verschiedene Arten von Aktien gibt es denn?"
       ]
     }
   ]
